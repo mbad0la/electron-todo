@@ -1,0 +1,16 @@
+{
+  "name": "electron-todo",
+  "version": "1.0.0",
+  "description": "A cross-platform to-do desktop application for electron hands-on",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": "mbad0la/electron-todo",
+  "author": "Mayank Badola",
+  "license": "MIT",
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.12"
+  }
+}
