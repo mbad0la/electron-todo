@@ -12,5 +12,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron-prebuilt": "^1.4.12"
+  },
+  "dependencies": {
+    "aws-dynamodb": "^0.1.62"
   }
 }

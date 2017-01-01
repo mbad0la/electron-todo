@@ -1,10 +1,46 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+
+const dynamoConfig = JSON.parse(fs.readFileSync('credentials.json').toString())
+
+const credentials = {accessKeyId, secretAccessKey, region} = dynamoConfig
+
+const DynamoDB = require('aws-dynamodb')(credentials)
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+
+function insert(args) {
+  DynamoDB
+    .table(dynamoConfig.table)
+    .insert({
+      tagname: args.tagname,
+      content: args.content,
+      timestamp: new Date().getTime(),
+      title: args.title
+    }, (err, data) => {
+      if (err) {
+        // fail
+      } else {
+        // success
+      }
+    })
+}
+
+function read(args) {
+  DynamoDB
+    .table(dynamoConfig.table)
+    .scan(function(err, data) {
+      if (err) {
+        // fail
+      } else {
+        // success
+      }
+    })
+}
 
 function createWindow () {
   // Create the browser window.
@@ -18,7 +54,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -32,7 +68,14 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+
+  DynamoDB.client.listTables(function(err, data) {
+    console.log(data.TableNames)
+  })
+
+  createWindow()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -51,5 +94,5 @@ app.on('activate', () => {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+ipcMain.on('insert', (event, args) => insert(args))
+ipcMain.on('read', (event, args) => read(args))
