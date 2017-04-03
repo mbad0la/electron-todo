@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
 .app {
-  text-size-adjust: none;
-  font-family: helvetica, arial, sans-serif;
-  line-height: 200%;
-  padding: 6px 20px 30px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  color: #d7d7d7;
+  font-size: 20px;
+  padding: 40px 20px 30px;
 }

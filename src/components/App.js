@@ -3,8 +3,28 @@ import styles from './App.css';
 
 const App = () => (
   <div className={styles.app}>
-    <h2>Hello, </h2>
+    No notes to share with you!
   </div>
 );
 
-export default App;
+class NotesWrapper extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      'notes': []
+    }
+  }
+
+  render() {
+    if (this.state.notes.length == 0) {
+      return (
+        <App />
+      )
+    }
+
+  }
+
+}
+
+export default NotesWrapper;
