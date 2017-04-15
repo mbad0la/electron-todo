@@ -1,10 +1,66 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 
-.app {
+.view {
+  display: flex;
+}
+
+.note {
+  background-color: #f5f5f5;
+  width: 30%;
+  padding: 0px 10px;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+  color: #000;
+  font-family: Roboto, 'sans-serif';
+  transition: all 0.4s;
+}
+
+.note:hover {
+  box-shadow: 0 4px 2px 0 rgba(0,0,0,0.16),0 0 0 2px rgba(0,0,0,0.08);
+}
+
+.noteContent:focus {
+  outline: none;
+}
+
+.noteHead {
+  height: 20px;
+  position: relative;
+}
+
+.noteFoot {
+  height: 20px;
+  position: relative;
+}
+
+.new {
+  display: none;
+  position: absolute;
+  top: -15px;
+  right: -25px;
+  background-color: #f5f5f5;
+  width: 30px;
+  height: 30px;
+  font-size: 26px;
+  color: #c7c7c7;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
-  color: #d7d7d7;
-  font-size: 20px;
-  padding: 40px 20px 30px;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+  transition: all 0.4s;
+}
+
+.new:hover {
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #8cff89;
+}
+
+.note:hover .new {
+  display: block;
+}
+
+[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  display: block;
+  color: #868686;
 }

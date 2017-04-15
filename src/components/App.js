@@ -1,12 +1,6 @@
 import React from 'react';
 import styles from './App.css';
 
-const App = () => (
-  <div className={styles.app}>
-    No notes to share with you!
-  </div>
-);
-
 class NotesWrapper extends React.Component {
 
   constructor(props) {
@@ -14,15 +8,31 @@ class NotesWrapper extends React.Component {
     this.state = {
       'notes': []
     }
+    this.addToNotes = this.addToNotes.bind(this)
+  }
+
+  addToNotes() {
+    console.log('Pressed addToNotes')
   }
 
   render() {
-    if (this.state.notes.length == 0) {
-      return (
-        <App />
-      )
-    }
-
+    return (
+      <div className={styles.view}>
+        <div className={styles.note}>
+          <div className={styles.noteHead}>
+            <div className={styles.new} onClick={this.addToNotes}>&#043;</div>
+          </div>
+          <div
+            className={styles.noteContent}
+            contentEditable
+            suppressContentEditableWarning
+            placeholder="Jot down ...">
+          </div>
+          <div className={styles.noteFoot}>
+          </div>
+        </div>
+      </div>
+    )
   }
 
 }
