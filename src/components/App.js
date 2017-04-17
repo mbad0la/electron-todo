@@ -6,13 +6,20 @@ class NotesWrapper extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      'notes': []
+      buffer: '',
+      notes: []
     }
+    this.newNoteBuffer = ''
     this.addToNotes = this.addToNotes.bind(this)
+    this.updateBuffer = this.updateBuffer.bind(this)
   }
 
   addToNotes() {
-    console.log('Pressed addToNotes')
+    console.log(this.newNoteBuffer)
+  }
+
+  updateBuffer(event) {
+    this.newNoteBuffer = event.target.innerHTML
   }
 
   render() {
@@ -26,7 +33,8 @@ class NotesWrapper extends React.Component {
             className={styles.noteContent}
             contentEditable
             suppressContentEditableWarning
-            placeholder="Jot down ...">
+            placeholder="Jot down ..."
+            onInput={this.updateBuffer}>
           </div>
           <div className={styles.noteFoot}>
           </div>
