@@ -13,11 +13,11 @@ const DynamoDB = require('aws-dynamodb')(credentials)
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-function insert(args) {
+const insert = args => {
   DynamoDB
     .table(dynamoConfig.table)
     .insert({
-      tagname: args.tagname,
+      tagname: args.tagname || 'general',
       content: args.content,
       timestamp: new Date().getTime(),
       title: args.title
@@ -30,7 +30,7 @@ function insert(args) {
     })
 }
 
-function read(args) {
+const read = args => {
   DynamoDB
     .table(dynamoConfig.table)
     .scan(function(err, data) {
@@ -91,3 +91,4 @@ app.on('activate', () => {
 
 ipcMain.on('insert', (event, args) => insert(args))
 ipcMain.on('read', (event, args) => read(args))
+ipcMain.on('add-note', (event, args) => console.log(JSON.stringify(args)))

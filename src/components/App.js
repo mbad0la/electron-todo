@@ -1,14 +1,16 @@
-import React from 'react';
-import styles from './App.css';
+import React from 'react'
+import styles from './App.css'
+import {ipcRenderer} from 'electron'
 
 class NotesWrapper extends React.Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
-      buffer: '',
       notes: []
     }
+
     this.newNoteContentBuffer = ''
     this.newNoteTitleBuffer = ''
     this.addToNotes = this.addToNotes.bind(this)
@@ -17,7 +19,15 @@ class NotesWrapper extends React.Component {
   }
 
   addToNotes() {
-    console.log(this.newNoteBuffer)
+    if (this.newNoteTitleBuffer != '' && this.newNoteContentBuffer != '') {
+
+      let args = {
+        title: this.newNoteTitleBuffer,
+        content: this.newNoteContentBuffer
+      }
+
+      ipcRenderer.send('add-note', args)
+    }
   }
 
   updateContentBuffer(event) {
