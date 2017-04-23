@@ -26,7 +26,7 @@ class NotesWrapper extends React.Component {
         content: this.newNoteContentBuffer
       }
 
-      ipcRenderer.send('add-note', args)
+      ipcRenderer.send('insert', args)
     }
   }
 
@@ -38,29 +38,67 @@ class NotesWrapper extends React.Component {
     this.newNoteTitleBuffer = event.target.innerHTML
   }
 
+  componentWillMount() {
+    ipcRenderer.on('update-app', (event, args) => {
+      this.setState({notes: args})
+    })
+    ipcRenderer.send('read')
+  }
+
   render() {
     return (
-      <div className={styles.newView}>
-        <div className={styles.note}>
-          <div className={styles.noteHead}>
-            <div className={styles.new} onClick={this.addToNotes}>&#043;</div>
+      <div>
+        <div className={styles.view}>
+          <div className={styles.note}>
+            <div className={styles.noteHead}>
+              <div className={styles.new} onClick={this.addToNotes}>&#043;</div>
+            </div>
+            <div
+              className={styles.noteTitle}
+              contentEditable
+              suppressContentEditableWarning
+              placeholder="Heading"
+              onInput={this.updateTitleBuffer}>
+            </div>
+            <div
+              className={styles.noteContent}
+              contentEditable
+              suppressContentEditableWarning
+              placeholder="Content"
+              onInput={this.updateContentBuffer}>
+            </div>
+            <div className={styles.noteFoot}>
+            </div>
           </div>
-          <div
-            className={styles.noteTitle}
-            contentEditable
-            suppressContentEditableWarning
-            placeholder="Heading"
-            onInput={this.updateTitleBuffer}>
-          </div>
-          <div
-            className={styles.noteContent}
-            contentEditable
-            suppressContentEditableWarning
-            placeholder="Content"
-            onInput={this.updateContentBuffer}>
-          </div>
-          <div className={styles.noteFoot}>
-          </div>
+        </div>
+        <div className={styles.wrapView}>
+          {this.state.notes.map((note, i) => <Note key={i} data={note} />)}
+        </div>
+      </div>
+    )
+  }
+
+}
+
+class Note extends React.Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    return (
+      <div className={styles.note}>
+        <div className={styles.noteHead}>
+          <div className={styles.delete}>&#10060;</div>
+        </div>
+        <div className={styles.noteTitle}>
+          {this.props.data.title}
+        </div>
+        <div className={styles.noteContent}>
+          {this.props.data.content}
+        </div>
+        <div className={styles.noteFoot}>
         </div>
       </div>
     )

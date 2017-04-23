@@ -23,9 +23,9 @@ const insert = args => {
       title: args.title
     }, (err, data) => {
       if (err) {
-        // fail
+        console.log(err)
       } else {
-        // success
+        read()
       }
     })
 }
@@ -35,9 +35,9 @@ const read = args => {
     .table(dynamoConfig.table)
     .scan(function(err, data) {
       if (err) {
-        // fail
+        console.log(err)
       } else {
-        // success
+        win.webContents.send('update-app', data)
       }
     })
 }
@@ -91,4 +91,3 @@ app.on('activate', () => {
 
 ipcMain.on('insert', (event, args) => insert(args))
 ipcMain.on('read', (event, args) => read(args))
-ipcMain.on('add-note', (event, args) => console.log(JSON.stringify(args)))
